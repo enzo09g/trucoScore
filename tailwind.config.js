@@ -7,7 +7,11 @@ export default {
     './src/**/*.{js,ts,jsx,tsx}', // Si estás trabajando con Vite + React
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        universal:['"Universal Sans"', 'sans-serif']
+      }
+    },
   },
   plugins: [],
 };
