@@ -10,9 +10,9 @@
 
 @font-face {
   font-family: 'Universal Sans';
-  src: url('src/fonts/fonts.woff2');
+  src: url('./src/fonts/fonts.woff2');
 }
 
 #root{
-  background-image: url('src/Img/background.jpeg');
+  background-image: url('./src/Img/background.jpeg');
 }
