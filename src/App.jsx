@@ -1,75 +1,50 @@
-import { useState } from "react"
-import { Minus, Plus } from "./Components/Svg"
-import { Tanteador } from "./Components/Tanteador"
+import { useEffect, useState } from "react";
+import { Tablero } from "./Components/Tablero";
+import { BrowserRouter, Route, Routes, Link, useLocation } from "react-router";
 
 function App() {
+  const { pathname } = useLocation();
 
-  const [TantosJugador1, SetTantosJugador1] = useState(0)
-  const [TantosJugador2, SetTantosJugador2] = useState(0)
+  function bodyClassChange(path) {
+    const bodyClass = path == "/trucoScore/" ? "overflow-y-hidden" : "";
+    console.log(path);
+    console.log(bodyClass);
 
-  const handleAumentarPuntosP1 = () => {
-    SetTantosJugador1((ValorAnterior) => {
-      return ValorAnterior + 1
-    })
+    return bodyClass;
   }
 
-  const handleDisminuirPuntosP1 = () => {
-    SetTantosJugador1((ValorAnterior) => {
-      console.log(ValorAnterior + 1)
-      return ValorAnterior - 1
-    })
-  }
-
-  const handleAumentarPuntosP2 = () => {
-    SetTantosJugador2((ValorAnterior) => {
-      return ValorAnterior + 1
-    })
-  }
-
-  const handleDisminuirPuntosP2 = () => {
-    SetTantosJugador2((ValorAnterior) => {
-      console.log(ValorAnterior + 1)
-      return ValorAnterior - 1
-    })
-  }
-
+  useEffect(() => {
+    const bodyClass = bodyClassChange(pathname);
+    document.body.className = bodyClass;
+  }, [pathname]);
 
   return (
-    <>
-
-      <div className="p-4 relative z-10 min-h-screen text-white flex font-universal text-center flex-col">
-
-        <div className="flex">
-          <div className="grow shrink-0 basis-0">
-            <h1 className="uppercase italic tracking-widest">primer equipo</h1>
+    <Routes>
+      <Route
+        path="/trucoscore"
+        element={
+          <div className="z-10 absolute w-full h-screen flex justify-center items-center">
+            <ul className="flex flex-col backdrop-blur-md items-center gap-4 text-pretty bg-transparent p-5 rounded-3xl border shadow-2xl">
+              <li className="hover:underline hover:scale-110 transition-transform">
+                <Link
+                  className="text-2xl select-none text-white font-universal uppercase"
+                  to={"/trucoscore/tablero"}
+                >
+                  Tanteador
+                </Link>
+              </li>
+              <li className="hover:underline hover:scale-110 transition-transform">
+                <span className="text-xl text-white font-universal uppercase">
+                  Truco (En 1039 meses)
+                </span>
+              </li>
+            </ul>
           </div>
-          <div className="grow shrink-0 basis-0">
-            <h1 className="uppercase italic tracking-widest">El tremendo equipo numero 2</h1>
-          </div>
-        </div>
-        <div className="flex h-full w-full">
-          <div className="grow shrink-0 basis-0 border-r border-white pr-4">
-            <Tanteador InitialTantos={TantosJugador1} />
-          </div>
-          <div className="grow shrink-0 basis-0 pl-4">
-            <Tanteador InitialTantos={TantosJugador2} />
-          </div>
-        </div>
-
-        <div className="fixed bottom-0 p-2 z-[100] bg-black opacity-50 left-0 grow shrink w-full flex">
-          <div className="grow shrink-0 basis-0 flex justify-center gap-10">
-            <button onClick={handleAumentarPuntosP1} className="cursor-pointer"><Plus /></button>
-            <button onClick={handleDisminuirPuntosP1} className="cursor-pointer"><Minus /></button>
-          </div>
-          <div className="grow shrink-0 basis-0 flex justify-center gap-10">
-            <button onClick={handleAumentarPuntosP2} className="cursor-pointer"><Plus /></button>
-            <button onClick={handleDisminuirPuntosP2} className="cursor-pointer"><Minus /></button>
-          </div>
-        </div>
-
-      </div>
-    </>
-  )
+        }
+      />
+      <Route path="/trucoscore/tablero" element={<Tablero />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
